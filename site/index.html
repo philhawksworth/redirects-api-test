@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Test for issue: Netlify redirects</title>
+  <base target="_blank">
+  <style>
+
+    body, html {
+      text-align:center;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 1000px;
+      text-align: left;
+      margin: 3em auto;
+    }
+
+    h1, h2, h3 {
+      margin-top: 2em;
+    }
+
+
+    p.note {
+      margin-top: 0.2em;
+      color: #666;
+    }
+
+    ul.case {
+      margin-top: 2em;
+    }
+
+    ul.case > ul {
+      margin-top: 1em;
+    }
+
+    li ul {
+      margin-bottom: 3em;
+    }
+    li ul li {
+      margin-bottom: 0.2em;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Testing redirects: Dev vs Deployed</h1>
+    <p>
+      It appears thay the redirects API is honoured differently locally while using Netlify Dev, to globally once deployed ot our ADN. Specifically with regards to resolving to assets served by Netlify Large Media.
+    </p>
+    <p>
+      The following links and their described expecred behaviour exist for the purposed of testing this assertion, and all point to assets managed under Netlify Large Media on a seperate project.
+    </p>
+
+
+    <h2>Test links</h2>
+    <p>
+      All the links below are some sort of redirect or proxy to an existing image asset served by Netlify using NLM.<br />
+      (<a href="https://lazy-load-nlm.netlify.com/images/lighthouse-5.jpg">https://lazy-load-nlm.netlify.com/images/lighthouse-5.jpg</a>), with the redirects configure in a netlify.toml file.
+    </p>
+    <ul class="case">
+      <li>
+        <a href="https://lazy-load-nlm.netlify.com/images/lighthouse-5.jpg?nf_resize=fit&w=500">https://lazy-load-nlm.netlify.com/images/lighthouse-5.jpg?nf_resize=fit&w=500</a>
+        <p class="note">
+          Image transform via querystring paramaters. No redirects in effect.
+        </p>
+        <ul>
+          <li> ✅ Looks good when accessed locally via Netlify dev.</li>
+          <li> ✅ Looks good when deployed and served from the ADN.</li>
+        </ul>
+      </li>
+      <li>
+        <a href="/images/small/redirect/lighthouse-5.jpg">/images/small/redirect/lighthouse-5.jpg</a>
+        <p class="note">
+          Using the URL path as a convenient alias for some image transforms. Redirects with a 302 to the desired asset
+        </p>
+        <code>
+          <pre>
+[[redirects]]
+  from = "/images/small/redirect/*"
+  to = "https://lazy-load-nlm.netlify.com/images/:splat?nf_resize=fit&w=200"
+  status = 302
+          </pre>
+        </code>
+        <ul>
+          <li> ✅ Looks good when accessed locally via Netlify dev.</li>
+          <li> ? Looks ? when deployed and served from the ADN.</li>
+        </ul>
+      </li>
+         <li>
+        <a href="/images/small/proxy/lighthouse-5.jpg">/images/small/proxy/lighthouse-5.jpg</a>
+        <p class="note">
+          Using the URL path as a convenient alias for some image transforms. Proxies with a 200 to the desired asset
+        </p>
+        <code>
+          <pre>
+[[redirects]]
+  from = "/images/small/proxy/*"
+  to = "https://lazy-load-nlm.netlify.com/images/:splat?nf_resize=fit&w=200"
+  status = 200
+          </pre>
+        </code>
+        <ul>
+          <li> ✅ Looks good when accessed locally via Netlify dev.</li>
+          <li> ? Looks ? when deployed and served from the ADN.</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

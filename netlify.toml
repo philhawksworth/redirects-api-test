@@ -1,0 +1,15 @@
+[build]
+  publish = "site"
+
+[dev]
+  publish = "site"
+
+[[redirects]]
+  from = "/images/small/redirect/*"
+  to = "https://lazy-load-nlm.netlify.com/images/:splat?nf_resize=fit&w=200"
+  status = 302
+
+[[redirects]]
+  from = "/images/small/proxy/*"
+  to = "https://lazy-load-nlm.netlify.com/images/:splat?nf_resize=fit&w=200"
+  status = 200
