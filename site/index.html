@@ -69,8 +69,7 @@
           Image transform via querystring paramaters. No redirects in effect.
         </p>
         <ul>
-          <li> ✅ Looks good when accessed locally via Netlify dev.</li>
-          <li> ✅ Looks good when deployed and served from the ADN.</li>
+          <li> 👍 All good. We're just hitting the target URL on NLM directly.</li>
         </ul>
       </li>
       <li>
@@ -87,8 +86,8 @@
           </pre>
         </code>
         <ul>
-          <li> ✅ Looks good when accessed locally via Netlify dev.</li>
-          <li> ? Looks ? when deployed and served from the ADN.</li>
+          <li> 👍 Redirects as expected when accessed locally via Netlify dev.</li>
+          <li> 👍 Redirects as expected when deployed and served from the ADN.</li>
         </ul>
       </li>
          <li>
@@ -105,8 +104,8 @@
           </pre>
         </code>
         <ul>
-          <li> ✅ Looks good when accessed locally via Netlify dev.</li>
-          <li> ? Looks ? when deployed and served from the ADN.</li>
+          <li> 👍 Proxies as expected when accessed locally via Netlify dev.</li>
+          <li> 👎 Proxy fails to pass along the querystring parameters to NLM when deployed and served from the ADN.</li>
         </ul>
       </li>
     </ul>

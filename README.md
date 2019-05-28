@@ -11,7 +11,7 @@ To clone this test site to compare local to production environment results:
 ```bash
 
 # clone this repo
-git clone
+git clone git@github.com:philhawksworth/redirects-api-test.git
 
 # move to working directory
 cd redirects-api-test
